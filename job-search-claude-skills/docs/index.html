@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume Tailoring Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#EDF1EF; --sheet:#F8FAF9; --ink:#1B2A2E; --muted:#5A6B6E; --rule:#C9D3D1;
+  --stream:#0E7471; --stream-soft:#D5E9E7; --ctrl:#B8701A; --ctrl-soft:#F4E6D2; --warn:#A8412F; --warn-soft:#F3DDD7;
+  --code:#E4EBE9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111A1C; --sheet:#172225; --ink:#E3ECEA; --muted:#93A4A6; --rule:#2C3A3D;
+    --stream:#4CC2BC; --stream-soft:#16383A; --ctrl:#E0A052; --ctrl-soft:#3A2A15; --warn:#E78470; --warn-soft:#3B1F1A;
+    --code:#1E2B2E; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111A1C; --sheet:#172225; --ink:#E3ECEA; --muted:#93A4A6; --rule:#2C3A3D;
+  --stream:#4CC2BC; --stream-soft:#16383A; --ctrl:#E0A052; --ctrl-soft:#3A2A15; --warn:#E78470; --warn-soft:#3B1F1A;
+  --code:#1E2B2E; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.55 "IBM Plex Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:40px 64px;display:flex;flex-direction:column;gap:48px}
+header{display:flex;flex-direction:column;gap:12px}
+.eyebrow{font:500 12px "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--stream)}
+h1{font:700 clamp(30px,5vw,46px)/1.05 "Barlow Semi Condensed","Arial Narrow",sans-serif;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font:600 26px/1.15 "Barlow Semi Condensed","Arial Narrow",sans-serif;margin:0;text-wrap:balance}
+.lede{max-width:68ch;color:var(--muted);margin:0}
+.lede b{color:var(--ink);font-weight:600}
+section{display:flex;flex-direction:column;gap:14px}
+.thesis{background:var(--sheet);border:1px solid var(--rule);border-left:4px solid var(--stream);border-radius:4px;padding:14px 18px;max-width:78ch}
+.thesis p{margin:0}
+
+/* Flow */
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.unit{display:grid;grid-template-columns:64px 1fr;gap:0 18px}
+.rail{position:relative;display:flex;justify-content:center}
+.rail::before{content:"";position:absolute;top:0;bottom:0;width:3px;background:var(--stream)}
+.unit:first-child .rail::before{top:26px}
+.unit:last-child .rail::before{bottom:calc(100% - 26px)}
+.tag{position:relative;margin-top:10px;width:56px;height:36px;border:2px solid var(--stream);background:var(--sheet);border-radius:18px;display:grid;place-items:center;font:500 13px "IBM Plex Mono",monospace;color:var(--stream)}
+.unit.found .tag{background:var(--stream);color:var(--sheet)}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:20px 22px;margin-bottom:20px;display:flex;flex-direction:column;gap:12px}
+.card-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.card h3{font:600 22px/1.2 "Barlow Semi Condensed","Arial Narrow",sans-serif;margin:0}
+.pill{font:500 11px "IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--stream);background:var(--stream-soft);border-radius:10px;padding:2px 9px}
+.card p{margin:0;max-width:74ch}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 22px}
+.k{display:block;font:500 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.cols ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;font-size:14px}
+.exit{font-size:14px;border-left:3px solid var(--ink);padding:2px 0 2px 12px}
+.why{font-size:14px;background:var(--ctrl-soft);border-radius:4px;padding:10px 14px}
+.why b{color:var(--ctrl);font:600 11px "IBM Plex Mono",monospace;letter-spacing:.06em;text-transform:uppercase;margin-right:6px}
+.prompt{position:relative;background:var(--code);border-radius:4px;padding:12px 14px;font:13px/1.5 "IBM Plex Mono",monospace;white-space:pre-wrap;margin:0}
+.prompt-wrap{display:flex;flex-direction:column;gap:4px}
+.prompt-bar{display:flex;justify-content:space-between;align-items:center}
+button.copy{font:500 12px "IBM Plex Mono",monospace;color:var(--stream);background:none;border:1px solid var(--stream);border-radius:4px;padding:3px 10px;cursor:pointer}
+button.copy:focus-visible{outline:2px solid var(--stream);outline-offset:2px}
+
+/* Diagram */
+.diagram{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:12px;overflow-x:auto}
+.diagram svg{display:block;min-width:860px;width:100%;height:auto}
+svg .box{fill:var(--sheet);stroke:var(--ink);stroke-width:1.5}
+svg .box.src{stroke:var(--stream)}
+svg .box.gate{fill:var(--ctrl-soft);stroke:var(--ctrl)}
+svg .box.store{fill:var(--stream-soft);stroke:var(--stream)}
+svg text{fill:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:13px}
+svg .t-mono{font-family:"IBM Plex Mono",monospace;font-size:10.5px;fill:var(--muted);letter-spacing:.04em}
+svg .t-h{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-weight:600;font-size:15px}
+svg .pipe{stroke:var(--stream);stroke-width:2.5;fill:none}
+svg .ctl{stroke:var(--ctrl);stroke-width:1.6;stroke-dasharray:5 4;fill:none}
+svg .ah{fill:var(--stream)} svg .ahc{fill:var(--ctrl)}
+
+
+.fig{margin:0;display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.fig figcaption{display:flex;flex-direction:column;gap:2px}
+.fig-t{font:600 20px/1.2 "Barlow Semi Condensed","Arial Narrow",sans-serif}
+.walk{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px 18px;font-size:14px}
+.walk li{display:flex;gap:10px;align-items:flex-start}
+.walk .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--stream);color:var(--sheet);font:600 12px/22px "IBM Plex Mono",monospace;text-align:center}
+.walk .n.c{background:var(--ctrl)}
+.choose{margin:0;max-width:74ch;font-size:14px;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:12px 16px}
+svg .zone{fill:none;stroke:var(--rule);stroke-width:1.5;stroke-dasharray:3 3}
+svg .box.in{stroke:var(--stream);fill:var(--sheet)}
+svg .box.claude{stroke:var(--stream);stroke-width:2.5;fill:var(--sheet)}
+svg .t-s{font-size:12px;fill:var(--muted)}
+svg .t-big{font-family:"Barlow Semi Condensed","Arial Narrow",sans-serif;font-weight:700;font-size:24px}
+svg .t-gate{font-size:11px;fill:var(--ink)}
+svg .num{fill:var(--stream)} svg .num.c{fill:var(--ctrl)}
+svg .t-num{font:600 12px "IBM Plex Mono",monospace;fill:var(--sheet)}
+
+
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.toggle-all{font:500 12px "IBM Plex Mono",monospace;color:var(--stream);background:none;border:1px solid var(--stream);border-radius:4px;padding:5px 12px;cursor:pointer}
+details.more{border-top:1px solid var(--rule);padding-top:10px}
+details.more summary{cursor:pointer;list-style:none;font:500 12px "IBM Plex Mono",monospace;letter-spacing:.04em;color:var(--stream);display:inline-flex;align-items:center;gap:6px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;border:1px solid var(--stream);border-radius:3px;font-size:13px}
+details.more[open] summary::before{content:"\2212"}
+details.more .hide{display:none} details.more[open] .hide{display:inline} details.more[open] .show{display:none}
+details.more summary:focus-visible, .toggle-all:focus-visible{outline:2px solid var(--stream);outline-offset:2px}
+.more-body{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+
+/* Pitfalls */
+.ends{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.end{background:var(--warn-soft);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.end strong{font:600 17px "Barlow Semi Condensed","Arial Narrow",sans-serif;color:var(--warn)}
+@media (max-width:560px){
+  .unit{grid-template-columns:40px 1fr;gap:0 10px}
+  .tag{width:38px;height:30px;font-size:11px}
+  .card{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Playbook · Claude + Notion · resume tailoring system</div>
+  <h1>Build a resume tailoring system with Claude</h1>
+  <p class="lede">Five stages, run in order. You end up with an assistant that grades resumes like a strict ATS, tailors them to a specific job without inventing anything, and logs every application to your tracker. <b>The order is the lesson:</b> build the knowledge first, the automation last.</p>
+</header>
+
+<section>
+  <h2>How it works</h2>
+  <p class="lede">The whole system on one page. Follow the numbers.</p>
+  <figure class="fig">
+    
+    <div class="diagram"><svg viewBox="0 0 900 330" role="img" aria-label="System overview: your knowledge feeds Claude, a job description and base resume start a run, Claude produces a tailored resume and a tracker entry, and your corrections flow back into the knowledge.">
+<defs><marker id="ao" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker><marker id="co" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahc"/></marker></defs>
+<rect class="zone" x="10" y="40" width="250" height="232" rx="8"/>
+<text class="t-mono" x="25" y="62">WHAT YOU KNOW</text>
+<rect class="box src" x="25" y="76" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="99">Experience bank</text><text class="t-s" x="37" y="118">every story, the true version</text>
+<rect class="box src" x="25" y="140" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="163">Standards</text><text class="t-s" x="37" y="182">what a good bullet looks like</text>
+<rect class="box src" x="25" y="204" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="227">Standing rules</text><text class="t-s" x="37" y="246">your style + conventions</text>
+<rect class="box in" x="320" y="4" width="260" height="46" rx="23"/>
+<text class="t-h" x="450" y="24" text-anchor="middle">Job description + base resume</text>
+<text class="t-s" x="450" y="41" text-anchor="middle">base resume recommended</text>
+<rect class="box claude" x="320" y="108" width="260" height="116" rx="8"/>
+<text class="t-big" x="450" y="140" text-anchor="middle">Claude</text>
+<text class="t-s" x="450" y="160" text-anchor="middle">grades · tailors · logs</text>
+<text class="t-s" x="450" y="178" text-anchor="middle">reads your docs, writes the outputs</text>
+<rect class="box gate" x="365" y="190" width="170" height="24" rx="12"/>
+<text class="t-gate" x="450" y="206" text-anchor="middle">you approve before it writes</text>
+<rect class="zone" x="640" y="40" width="250" height="232" rx="8"/>
+<text class="t-mono" x="655" y="62">WHAT YOU GET</text>
+<rect class="box store" x="655" y="76" width="220" height="80" rx="4"/>
+<text class="t-h" x="667" y="108">Tailored resume</text><text class="t-s" x="667" y="130">one page, from the bank</text>
+<rect class="box store" x="655" y="170" width="220" height="80" rx="4"/>
+<text class="t-h" x="667" y="202">Application tracker</text><text class="t-s" x="667" y="224">every role you applied to</text>
+<path class="pipe" d="M260,166 H316" marker-end="url(#ao)"/>
+<path class="pipe" d="M450,50 V104" marker-end="url(#ao)"/>
+<path class="pipe" d="M580,166 H636" marker-end="url(#ao)"/>
+<path class="ctl" d="M765,272 V304 H135 V276" marker-end="url(#co)"/>
+<circle class="num" cx="288" cy="146" r="11"/><text class="t-num" x="288" y="150" text-anchor="middle">1</text>
+<circle class="num" cx="474" cy="78" r="11"/><text class="t-num" x="474" y="82" text-anchor="middle">2</text>
+<circle class="num" cx="608" cy="146" r="11"/><text class="t-num" x="608" y="150" text-anchor="middle">3</text>
+<circle class="num c" cx="450" cy="304" r="11"/><text class="t-num" x="450" y="308" text-anchor="middle">4</text>
+</svg></div>
+    <ol class="walk"><li><span class="n">1</span><span><b>Claude reads what you know:</b> your experience bank, your standards and your rules.</span></li><li><span class="n">2</span><span><b>You share a job description and a base resume.</b> The base resume is optional but recommended: starting from the version closest to the role gives Claude the best starting point.</span></li><li><span class="n">3</span><span><b>Claude grades and tailors,</b> then saves the resume and logs the application. You approve each step before anything gets written.</span></li><li><span class="n c">4</span><span><b>Your corrections go back into the bank and rules,</b> so each run starts out smarter than the last.</span></li></ol>
+  </figure>
+</section>
+
+<div class="thesis"><p><b>Start with the experience bank, not the grader.</b> A grader with no source of truth rewrites bullets from whatever resume you attach. Its edits come out generic, it overstretches stories, and you spend every session correcting its phrasing. When Claude can see the full, confirmed version of every story, it knows what's true and how far a story can be pushed toward a given role.</p></div>
+
+<section>
+  <div class="sec-head"><h2>The build sequence</h2><button type="button" class="toggle-all" id="toggle-all" aria-pressed="false">Expand all</button></div>
+  <ol class="flow">
+
+    <li class="unit found">
+      <div class="rail"><div class="tag">1</div></div>
+      <div class="card">
+        <div class="card-head"><h3>Build the master experience bank</h3><span class="pill">foundation</span></div>
+        <p>One document that holds every true thing you could put on a resume. It is raw material to draw from, not a resume you'd send.</p>
+        <details class="more"><summary><span class="show">Show details</span><span class="hide">Hide details</span></summary><div class="more-body">
+        <div class="cols">
+          <div><span class="k">Gather</span><ul>
+            <li>Every past resume version, including the ones tailored to specific roles</li>
+            <li>Interview stories (STAR/CARL notes), performance reviews, awards</li>
+            <li>Project write-ups and internship deliverables</li>
+          </ul></div>
+          <div><span class="k">Structure each achievement as</span><ul>
+            <li><b>Ground truth:</b> what actually happened, the real numbers, your actual role</li>
+            <li><b>Framings:</b> every version you've used, tagged by target role (product, program, ops…)</li>
+            <li><b>Guardrails:</b> what you can't claim (targets vs. results, confidential figures)</li>
+          </ul></div>
+        </div>
+        <div class="exit"><span class="k">Done when</span>Duplicates are merged, conflicting numbers and dates are settled with you, and every metric has a story behind it.</div>
+        <div class="prompt-wrap">
+          <div class="prompt-bar"><span class="k">Starter prompt</span><button class="copy" type="button">Copy</button></div>
+<pre class="prompt">Build me a master experience bank from all the resumes and stories I've shared. Group every bullet by role and achievement. For each achievement, give the ground-truth story, list every framing I've used and tag it by role type, and flag anything that conflicts across versions (numbers, dates, titles) so I can pick the true one. Don't write a resume. This is a source-of-truth document.</pre>
+        </div>
+        <div class="why"><b>Why first</b>Every later stage pulls from this document. If it's weak, every tailored resume is weak and you end up fixing the same bullets by hand over and over.</div>
+      </div></details>
+      </div>
+    </li>
+
+    <li class="unit">
+      <div class="rail"><div class="tag">2</div></div>
+      <div class="card">
+        <div class="card-head"><h3>Define "what good looks like"</h3><span class="pill">the standard</span></div>
+        <p>Write down the rules once, in one place, so every grade and edit gets checked against the same bar.</p>
+        <details class="more"><summary><span class="show">Show details</span><span class="hide">Hide details</span></summary><div class="more-body">
+        <div class="cols">
+          <div><span class="k">Reference material</span><ul>
+            <li>A guide with examples of strong resumes (a Notion page works well)</li>
+            <li>An approved action-verb list</li>
+          </ul></div>
+          <div><span class="k">Bullet rules</span><ul>
+            <li>Action → Context → Result on every bullet</li>
+            <li>One lead verb per bullet, never repeated anywhere on the resume</li>
+            <li>No two bullets proving the same skill; one line each; one page total</li>
+          </ul></div>
+        </div>
+        <div class="exit"><span class="k">Done when</span>Someone else could grade a resume against your rules and land on the same verdict you would.</div>
+        <div class="why"><b>Tip</b>Keep personal style rules (banned words, how you title a role) in the same list. Rules copied into several places drift apart.</div>
+      </div></details>
+      </div>
+    </li>
+
+    <li class="unit">
+      <div class="rail"><div class="tag">3</div></div>
+      <div class="card">
+        <div class="card-head"><h3>Build the grader</h3><span class="pill">first automation</span></div>
+        <p>Start with the grader as instructions in a Claude Project so it's quick to tune. Once its output stops surprising you, turn it into a skill.</p>
+        <details class="more"><summary><span class="show">Show details</span><span class="hide">Hide details</span></summary><div class="more-body">
+        <div class="cols">
+          <div><span class="k">What it outputs</span><ul>
+            <li>A strict grade with a one-line reason</li>
+            <li>The 2 highest-ROI edits, each as before → after</li>
+            <li>A short list of flags: bullets missing ACR, repeated verbs, bullets that overlap</li>
+          </ul></div>
+          <div><span class="k">Hard rules</span><ul>
+            <li>Replacement bullets come from the bank only</li>
+            <li>Never fabricate a metric</li>
+            <li>When a job description is given, grade keyword match against it</li>
+          </ul></div>
+        </div>
+        <div class="prompt-wrap">
+          <div class="prompt-bar"><span class="k">Starter prompt</span><button class="copy" type="button">Copy</button></div>
+<pre class="prompt">Act as a strict ATS. Grade the attached resume against my standards doc and verb list. Give an overall grade, then the 2 edits with the highest ROI as before → after. Then flag bullets that break Action-Context-Result, reuse a lead verb, or repeat the same evidence. Pull every replacement from my experience bank. Never invent numbers.</pre>
+        </div>
+        <div class="why"><b>Tip</b>Keep the output short. You want a signal you can act on, not a line-by-line rewrite. Ask for the full pass only when you need it.</div>
+      </div></details>
+      </div>
+    </li>
+
+    <li class="unit">
+      <div class="rail"><div class="tag">4</div></div>
+      <div class="card">
+        <div class="card-head"><h3>Close the feedback loop</h3><span class="pill">control loop</span></div>
+        <p>Every correction you make is data. Sort it into the right place so you never have to make the same correction twice.</p>
+        <details class="more"><summary><span class="show">Show details</span><span class="hide">Hide details</span></summary><div class="more-body">
+        <div class="cols">
+          <div><span class="k">When you correct Claude, ask</span><ul>
+            <li><b>Is it a fact?</b> ("it was 5 of 8, not all 8") → update the bank and mark it confirmed</li>
+            <li><b>Is it a style rule?</b> ("never use that verb") → add it to the standard</li>
+            <li><b>Is it a one-off?</b> → leave it in the chat</li>
+          </ul></div>
+          <div><span class="k">Also write back</span><ul>
+            <li>The latest approved phrasing for each story</li>
+            <li>Standing conventions: date formats, how a title reads on different resumes</li>
+          </ul></div>
+        </div>
+        <div class="why"><b>Why it matters</b>This loop is what makes the system get better over time. Without it, every session starts over.</div>
+      </div></details>
+      </div>
+    </li>
+
+    <li class="unit">
+      <div class="rail"><div class="tag">5</div></div>
+      <div class="card">
+        <div class="card-head"><h3>Automate the application pipeline</h3><span class="pill">end-to-end skill</span></div>
+        <p>Wrap the grader in a skill that runs from a single job description and base resume to a finished resume and a logged application, with you approving at the two points that matter.</p>
+        <details class="more"><summary><span class="show">Show details</span><span class="hide">Hide details</span></summary><div class="more-body">
+        <div class="cols">
+          <div><span class="k">Steps</span><ul>
+            <li>Start from the job description plus a base resume, ideally your closest past version for that type of role</li>
+            <li>Save the job description as a PDF (postings get taken down)</li>
+            <li>File it in a folder for that company</li>
+            <li>Run the grader, plus a pass that lists the JD requirements you cover and the ones you don't</li>
+            <li><b>Gate:</b> you approve which edits to make</li>
+            <li>Build an editable resume and check it's one page with no wrapped bullets</li>
+            <li><b>Gate:</b> you approve the tracker entry, then it's logged in Notion</li>
+          </ul></div>
+          <div><span class="k">Tracker setup (Notion)</span><ul>
+            <li><b>Companies</b> database: name, industry, careers page</li>
+            <li><b>Applications</b> database: role, status, date, source, link to the company</li>
+            <li>Keep the files on your computer and link to them from the tracker</li>
+            <li>An interview stories database, which feeds back into the bank</li>
+          </ul></div>
+        </div>
+        <div class="why"><b>Guardrails to build in</b>Flag requirements you don't meet instead of stretching to cover them. Ask before adding any tool or skill you haven't confirmed. Never overwrite a resume you've edited by hand.</div>
+      </div></details>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <h2>Pitfalls to avoid</h2>
+  <div class="ends">
+    <div class="end"><strong>Grader before bank</strong>You'll get generic edits and spend every session correcting phrasing. Build the bank first, even a rough one.</div>
+    <div class="end"><strong>More than one copy of the truth</strong>Keep exactly one bank and one rules list. When you revise a doc, replace it. Don't save a new copy next to the old one.</div>
+    <div class="end"><strong>Reusing old framings</strong>Tailor from the ground-truth story every time. Rewording an old tailored bullet produces near-duplicate resumes.</div>
+    <div class="end"><strong>Claiming targets as results</strong>Tag each number in the bank as either a measured outcome or a goal. Only measured outcomes go on a resume as results.</div>
+    <div class="end"><strong>Automating too early</strong>Get the grader's output right in a Project before you turn it into a skill, and turn it into a skill before you chain it into a pipeline.</div>
+    <div class="end"><strong>Unscreened sensitive info</strong>Mark confidential figures and internal names in the bank so they never make it into a resume.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Setup options: Google Drive or Notion</h2>
+  <p class="lede">Same flow as the overview at the top, with each piece placed in the tool you use.</p>
+  <figure class="fig">
+    <figcaption><span class="eyebrow">Option A · Google Drive</span><span class="fig-t">Everything lives in Drive</span></figcaption>
+    <div class="diagram"><svg viewBox="0 0 900 330" role="img" aria-label="Google Drive setup: a Resume System folder holds the bank, rules and verb list; Claude reads them through the Drive connector and writes a company folder and a tracker row into an Applications folder.">
+<defs><marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker><marker id="cg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahc"/></marker></defs>
+<rect class="zone" x="10" y="40" width="250" height="232" rx="8"/>
+<text class="t-mono" x="25" y="62">DRIVE · RESUME SYSTEM FOLDER</text>
+<rect class="box src" x="25" y="76" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="99">Experience bank</text><text class="t-s" x="37" y="118">Google Doc</text>
+<rect class="box src" x="25" y="140" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="163">Standards + rules</text><text class="t-s" x="37" y="182">Google Doc</text>
+<rect class="box src" x="25" y="204" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="227">Action verbs</text><text class="t-s" x="37" y="246">PDF</text>
+<rect class="box in" x="320" y="4" width="260" height="46" rx="23"/>
+<text class="t-h" x="450" y="24" text-anchor="middle">Job description + base resume</text>
+<text class="t-s" x="450" y="41" text-anchor="middle">base resume recommended</text>
+<rect class="box claude" x="320" y="108" width="260" height="116" rx="8"/>
+<text class="t-big" x="450" y="140" text-anchor="middle">Claude</text>
+<text class="t-s" x="450" y="160" text-anchor="middle">grades · tailors · logs</text>
+<text class="t-s" x="450" y="178" text-anchor="middle">via the Google Drive connector</text>
+<rect class="box gate" x="365" y="190" width="170" height="24" rx="12"/>
+<text class="t-gate" x="450" y="206" text-anchor="middle">you approve before it writes</text>
+<rect class="zone" x="640" y="40" width="250" height="232" rx="8"/>
+<text class="t-mono" x="655" y="62">DRIVE · APPLICATIONS FOLDER</text>
+<rect class="box store" x="655" y="76" width="220" height="80" rx="4"/>
+<text class="t-h" x="667" y="108">Company folder</text><text class="t-s" x="667" y="130">JD PDF + tailored resume</text>
+<rect class="box store" x="655" y="170" width="220" height="80" rx="4"/>
+<text class="t-h" x="667" y="202">Tracker</text><text class="t-s" x="667" y="224">Google Sheet, 1 row per role</text>
+<path class="pipe" d="M260,166 H316" marker-end="url(#ag)"/>
+<path class="pipe" d="M450,50 V104" marker-end="url(#ag)"/>
+<path class="pipe" d="M580,166 H636" marker-end="url(#ag)"/>
+<path class="ctl" d="M765,272 V304 H135 V276" marker-end="url(#cg)"/>
+<circle class="num" cx="288" cy="146" r="11"/><text class="t-num" x="288" y="150" text-anchor="middle">1</text>
+<circle class="num" cx="474" cy="78" r="11"/><text class="t-num" x="474" y="82" text-anchor="middle">2</text>
+<circle class="num" cx="608" cy="146" r="11"/><text class="t-num" x="608" y="150" text-anchor="middle">3</text>
+<circle class="num c" cx="450" cy="304" r="11"/><text class="t-num" x="450" y="308" text-anchor="middle">4</text>
+</svg></div>
+    <ol class="walk"><li><span class="n">1</span><span><b>Two folders in Drive:</b> <i>Resume System</i> holds your knowledge docs, and Claude reads them through the Google Drive connector.</span></li><li><span class="n">2</span><span><b>Share the job description</b> with Claude, plus the base resume closest to the role (recommended).</span></li><li><span class="n">3</span><span><b>Claude creates a folder for the company</b> inside <i>Applications</i>, saves the JD and your resume there, and adds a row to the tracker sheet.</span></li><li><span class="n c">4</span><span><b>Update the Google Docs</b> whenever you correct a fact or a phrasing, so there's only ever one current version.</span></li></ol>
+  </figure>
+  <figure class="fig">
+    <figcaption><span class="eyebrow">Option B · Notion</span><span class="fig-t">Notion for knowledge + tracking, files on your computer</span></figcaption>
+    <div class="diagram"><svg viewBox="0 0 900 330" role="img" aria-label="Notion setup: Notion pages and an interview stories database hold the knowledge; Claude reads them through the Notion connector, logs to Companies and Applications databases, and saves files to a company folder on your computer.">
+<defs><marker id="an" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker><marker id="cn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahc"/></marker></defs>
+<rect class="zone" x="10" y="40" width="250" height="232" rx="8"/>
+<text class="t-mono" x="25" y="62">NOTION · KNOWLEDGE</text>
+<rect class="box src" x="25" y="76" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="99">Experience bank</text><text class="t-s" x="37" y="118">Notion page</text>
+<rect class="box src" x="25" y="140" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="163">Standards guide</text><text class="t-s" x="37" y="182">Notion page</text>
+<rect class="box src" x="25" y="204" width="220" height="54" rx="4"/>
+<text class="t-h" x="37" y="227">Interview stories</text><text class="t-s" x="37" y="246">database, feeds the bank</text>
+<rect class="box in" x="320" y="4" width="260" height="46" rx="23"/>
+<text class="t-h" x="450" y="24" text-anchor="middle">Job description + base resume</text>
+<text class="t-s" x="450" y="41" text-anchor="middle">base resume recommended</text>
+<rect class="box claude" x="320" y="108" width="260" height="116" rx="8"/>
+<text class="t-big" x="450" y="140" text-anchor="middle">Claude</text>
+<text class="t-s" x="450" y="160" text-anchor="middle">grades · tailors · logs</text>
+<text class="t-s" x="450" y="178" text-anchor="middle">via the Notion connector</text>
+<rect class="box gate" x="365" y="190" width="170" height="24" rx="12"/>
+<text class="t-gate" x="450" y="206" text-anchor="middle">you approve before it writes</text>
+<rect class="zone" x="640" y="40" width="250" height="232" rx="8"/>
+<text class="t-mono" x="655" y="62">WHERE IT LANDS</text>
+<rect class="box store" x="655" y="76" width="220" height="80" rx="4"/>
+<text class="t-h" x="667" y="108">Notion databases</text><text class="t-s" x="667" y="130">Companies + Applications</text>
+<rect class="box store" x="655" y="170" width="220" height="80" rx="4"/>
+<text class="t-h" x="667" y="202">Your computer</text><text class="t-s" x="667" y="224">company folder: JD + resume</text>
+<path class="pipe" d="M260,166 H316" marker-end="url(#an)"/>
+<path class="pipe" d="M450,50 V104" marker-end="url(#an)"/>
+<path class="pipe" d="M580,166 H636" marker-end="url(#an)"/>
+<path class="ctl" d="M765,272 V304 H135 V276" marker-end="url(#cn)"/>
+<circle class="num" cx="288" cy="146" r="11"/><text class="t-num" x="288" y="150" text-anchor="middle">1</text>
+<circle class="num" cx="474" cy="78" r="11"/><text class="t-num" x="474" y="82" text-anchor="middle">2</text>
+<circle class="num" cx="608" cy="146" r="11"/><text class="t-num" x="608" y="150" text-anchor="middle">3</text>
+<circle class="num c" cx="450" cy="304" r="11"/><text class="t-num" x="450" y="308" text-anchor="middle">4</text>
+</svg></div>
+    <ol class="walk"><li><span class="n">1</span><span><b>Notion holds your knowledge:</b> the bank and standards as pages, and an interview stories database that keeps feeding the bank.</span></li><li><span class="n">2</span><span><b>Share the job description</b> with Claude, plus the base resume closest to the role (recommended).</span></li><li><span class="n">3</span><span><b>Claude saves the JD and your resume</b> to a company folder on your computer, then logs the role in the Companies and Applications databases, with a link to where the files are.</span></li><li><span class="n c">4</span><span><b>New interview stories and corrections</b> go into Notion, and the next run picks them up automatically.</span></li></ol>
+  </figure>
+  <p class="choose"><b>Which to pick?</b> Choose Drive if you want everything in one place and a spreadsheet tracker. Choose Notion if you already use it, or you want linked databases and board views of your pipeline.</p>
+</section>
+</div>
+
+<script>
+document.querySelectorAll('button.copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var pre=btn.closest('.prompt-wrap').querySelector('.prompt');
+    var done=function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy'},1500)};
+    try{
+      navigator.clipboard.writeText(pre.textContent).then(done,function(){sel(pre)});
+    }catch(e){sel(pre)}
+  });
+});
+function sel(el){var r=document.createRange();r.selectNodeContents(el);var s=window.getSelection();s.removeAllRanges();s.addRange(r)}
+
+(function(){
+  var btn=document.getElementById('toggle-all'); if(!btn) return;
+  var all=function(){return Array.prototype.slice.call(document.querySelectorAll('details.more'))};
+  var sync=function(){var open=all().every(function(d){return d.open});btn.textContent=open?'Collapse all':'Expand all';btn.setAttribute('aria-pressed',open)};
+  btn.addEventListener('click',function(){var open=!all().every(function(d){return d.open});all().forEach(function(d){d.open=open});sync()});
+  all().forEach(function(d){d.addEventListener('toggle',sync)});
+})();
+</script>
+
+</body>
+</html>
